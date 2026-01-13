@@ -38,7 +38,7 @@ The addition of **qp²** (quantization parameter squared) captures the **non-lin
 - Type conversion to numeric (for QP, VMAF, SSIM, PSNR, and pMOS)  
 - Global NaN removal (`df.dropna().reset_index(drop=True)`)  
 
-After preprocessing, **8,448 valid samples** remained. :contentReference[oaicite:1]{index=1}
+After preprocessing, **8,448 valid samples** remained. 
 
 
 ### How pMOS Was Obtained
@@ -49,8 +49,7 @@ The pMOS values used in this work were generated in two stages: **real human sub
 A controlled subjective experiment was conducted on the base set of **240 volumetric videos**, with each video being viewed, in a view-and-rate format, multiple times by different human subjects, following the **ITU-T P.910** recommendations on conducting subjective tests. Individual opinion scores were cleaned using standard outlier-rejection procedures and the remaining valid responses averaged to yield a reliable **Mean Opinion Score (MOS)** on the **1–5 quality scale**. These are its only part of the dataset that contain data from genuine human quality judgements.
 
 2) **Model-based extension to the full catalogue:**  
-The second stage was to take these **240 MOS labelled videos** and train a neural regression model (**EfficientNet-B3**). This model learns to predict subjective quality from objective and metadata-based features. Once trained, it was then applied to the full collection of **8,448 compressed video versions**, again with all four QP levels (15, 25, 35, 45) and with all compression types. Since human MOS existed only for the original 240 videos, the other ~97% of the dataset needed model-based estimation. The predicted scores produced from this model become the **pMOS values** used in the XGBoost regression study. pMOS thus allows extension of the subjective scale for all compression settings, firmly anchored to real human judgements. :contentReference[oaicite:2]{index=2}
-
+The second stage was to take these **240 MOS labelled videos** and train a neural regression model (**EfficientNet-B3**). This model learns to predict subjective quality from objective and metadata-based features. Once trained, it was then applied to the full collection of **8,448 compressed video versions**, again with all four QP levels (15, 25, 35, 45) and with all compression types. Since human MOS existed only for the original 240 videos, the other ~97% of the dataset needed model-based estimation. The predicted scores produced from this model become the **pMOS values** used in the XGBoost regression study. pMOS thus allows extension of the subjective scale for all compression settings, firmly anchored to real human judgements. 
 
 
 ### Model Design
@@ -71,13 +70,13 @@ The final model uses **XGBoost** (`tree_method='hist'`), selected for stability,
 | `random_state` | 42 |
 | `objective` | `reg:squarederror` |
 
-Reproducibility is supported by fixing `random_state=42` and using deterministic **GroupKFold** splits. :contentReference[oaicite:3]{index=3}
+Reproducibility is supported by fixing `random_state=42` and using deterministic **GroupKFold** splits. 
 
 
 ## Evaluation Protocol
 
 ### Cross-Validation
-**GroupKFold (n_splits=5)** is used, grouping by **(character + view)** to prevent overlap between folds of similar viewpoints of the same character. Each fold acts as an unseen test set, enabling fair **Out-of-Fold (OOF)** evaluation. :contentReference[oaicite:4]{index=4}
+**GroupKFold (n_splits=5)** is used, grouping by **(character + view)** to prevent overlap between folds of similar viewpoints of the same character. Each fold acts as an unseen test set, enabling fair **Out-of-Fold (OOF)** evaluation. 
 
 ### Metrics
 All metrics are reported on the **1–5 pMOS scale**:
@@ -85,7 +84,7 @@ All metrics are reported on the **1–5 pMOS scale**:
 - **RMSE** (Root Mean Square Error)  
 - **MAE** (Mean Absolute Error)  
 - **Pearson r** (linear correlation coefficient)  
-- **Spearman ρ** (rank correlation) :contentReference[oaicite:5]{index=5}
+- **Spearman ρ** (rank correlation) 
 
 ## Results
 
@@ -113,8 +112,7 @@ All metrics are reported on the **1–5 pMOS scale**:
 | Spearman ρ | 0.9952 |
 | R² mean ± std | 0.9961 ± 0.0010 |
 
-These results indicate near-perfect alignment between predicted and true pMOS values. Errors are within ±0.04 on a 1–5 scale, and consistency holds across all folds. :contentReference[oaicite:7]{index=7}
-
+These results indicate near-perfect alignment between predicted and true pMOS values. Errors are within ±0.04 on a 1–5 scale, and consistency holds across all folds. 
 
 ### Calibration and Confidence Interval Analysis
 
@@ -139,7 +137,7 @@ The numerical change is intentionally minor, indicating the model was already we
 | PLCC | 0.9979 – 0.9982 |
 | SRCC | 0.9948 – 0.9955 |
 
-These tight intervals support stability across resamples. :contentReference[oaicite:8]{index=8}
+These tight intervals support stability across resamples. 
 
 
 ## Visualisations
@@ -195,4 +193,4 @@ Key points reported:
 - Inter-fold R² variance (±0.0010) indicates stable generalisation.
 - OOF scatter indicates absence of systemic bias, with predictions clustering around the y=x diagonal.
 - QP and QP² show an inverse, nonlinear relationship with pMOS.
-- Compression type contributes modestly but consistently, refining calibration per encoder type. :contentReference[oaicite:10]{index=10}
+- Compression type contributes modestly but consistently, refining calibration per encoder type. 
