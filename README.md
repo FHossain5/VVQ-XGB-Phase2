@@ -1,8 +1,6 @@
 # XGBoost pMOS Model (8,448 Volumetric Videos)
 
-This repository documents an **XGBoost regression model** trained on the full catalogue of **8,448 volumetric videos** for **predicted Mean Opinion Score (pMOS)** estimation. The aim here is not to claim human perception has been “solved”, but to provide a **numerically consistent, feature-space aligned predictor** across compression levels, characters, and viewpoints. All results are reported on the **1–5 pMOS scale**, where errors (RMSE, MAE) and correlations (Pearson, Spearman) reflect **regression consistency** rather than direct subjective quality assessment. :contentReference[oaicite:0]{index=0}
-
----
+This repository documents an **XGBoost regression model** trained on the full catalogue of **8,448 volumetric videos** for **predicted Mean Opinion Score (pMOS)** estimation. The aim here is not to claim human perception has been “solved”, but to provide a **numerically consistent, feature-space aligned predictor** across compression levels, characters, and viewpoints. All results are reported on the **1–5 pMOS scale**, where errors (RMSE, MAE) and correlations (Pearson, Spearman) reflect **regression consistency** rather than direct subjective quality assessment. 
 
 ## Table of Contents
 - [Methodology](#methodology)
@@ -19,7 +17,6 @@ This repository documents an **XGBoost regression model** trained on the full ca
 - [Limitations and Next Steps](#limitations-and-next-steps)
 - [Reproducibility and Artifacts](#reproducibility-and-artifacts)
 
----
 
 ## Methodology
 
@@ -43,7 +40,6 @@ The addition of **qp²** (quantization parameter squared) captures the **non-lin
 
 After preprocessing, **8,448 valid samples** remained. :contentReference[oaicite:1]{index=1}
 
----
 
 ### How pMOS Was Obtained
 
@@ -55,7 +51,7 @@ A controlled subjective experiment was conducted on the base set of **240 volume
 2) **Model-based extension to the full catalogue:**  
 The second stage was to take these **240 MOS labelled videos** and train a neural regression model (**EfficientNet-B3**). This model learns to predict subjective quality from objective and metadata-based features. Once trained, it was then applied to the full collection of **8,448 compressed video versions**, again with all four QP levels (15, 25, 35, 45) and with all compression types. Since human MOS existed only for the original 240 videos, the other ~97% of the dataset needed model-based estimation. The predicted scores produced from this model become the **pMOS values** used in the XGBoost regression study. pMOS thus allows extension of the subjective scale for all compression settings, firmly anchored to real human judgements. :contentReference[oaicite:2]{index=2}
 
----
+
 
 ### Model Design
 
@@ -77,7 +73,6 @@ The final model uses **XGBoost** (`tree_method='hist'`), selected for stability,
 
 Reproducibility is supported by fixing `random_state=42` and using deterministic **GroupKFold** splits. :contentReference[oaicite:3]{index=3}
 
----
 
 ## Evaluation Protocol
 
@@ -92,8 +87,6 @@ All metrics are reported on the **1–5 pMOS scale**:
 - **Pearson r** (linear correlation coefficient)  
 - **Spearman ρ** (rank correlation) :contentReference[oaicite:5]{index=5}
 
----
-
 ## Results
 
 ### Fold-wise Performance
@@ -106,8 +99,6 @@ All metrics are reported on the **1–5 pMOS scale**:
 | 4 | 0.9951 | 0.0456 | 0.0340 | 0.9977 | 0.9917 |
 | 5 | 0.9959 | 0.0408 | 0.0290 | 0.9980 | 0.9960 |
 
-
----
 
 ### Overall Results
 
@@ -124,7 +115,6 @@ All metrics are reported on the **1–5 pMOS scale**:
 
 These results indicate near-perfect alignment between predicted and true pMOS values. Errors are within ±0.04 on a 1–5 scale, and consistency holds across all folds. :contentReference[oaicite:7]{index=7}
 
----
 
 ### Calibration and Confidence Interval Analysis
 
@@ -151,7 +141,6 @@ The numerical change is intentionally minor, indicating the model was already we
 
 These tight intervals support stability across resamples. :contentReference[oaicite:8]{index=8}
 
----
 
 ## Visualisations
 
@@ -195,8 +184,6 @@ The following figures are referenced in the report and are expected to be stored
   `xgb_results/xgb_calibration_curves.png`  
   ![Calibration curves](xgb_results/xgb_calibration_curves.png)
 
-
----
 
 ## Analysis
 
