@@ -142,44 +142,40 @@ These tight intervals support stability across resamples.
 
 ## Visualisations
 
-The following figures are referenced in the report and are expected to be stored under `xgb_results/`.
-
-> **Where to add images:** place the PNGs inside `xgb_results/` and keep the exact filenames below. Then these links will render automatically on GitHub.
-
 - **Figure 1:** R² by Fold  
-  `xgb_results/xgb_r2_by_fold.png`  
+   
   ![R² by fold](xgb_r2_by_fold.png)
 
 - **Figure 2:** RMSE by Fold  
-  `xgb_results/xgb_rmse_by_fold.png`  
+  
   ![RMSE by fold](xgb_rmse_by_fold.png)
 
 - **Figure 3:** Fold-wise Pearson Correlation  
-  `xgb_results/xgb_pearson_by_fold.png`  
+  
   ![Pearson by fold](xgb_pearson_by_fold.png)
 
 - **Figure 4:** Fold-wise Spearman Correlation  
-  `xgb_results/xgb_spearman_by_fold.png`  
+  
   ![Spearman by fold](xgb_spearman_by_fold.png)
 
 - **Figure 5:** OOF Scatter Plot (predicted vs true pMOS)  
-  `xgb_results/xgb_oof_scatter_uncalibrated.png`  
+  
   ![OOF scatter uncalibrated](xgb_oof_scatter_uncalibrated.png)
 
 - **Figure 6:** Top Ten Most Influential Features  
-  `xgb_results/xgb_feature_importance_top10.png`  
+
   ![Top-10 feature importance](xgb_feature_importance_top10.png)
 
 - **Figure 7:** Uncalibrated Scatter  
-  `xgb_results/xgb_oof_scatter_uncalibrated.png`  
+
   ![Uncalibrated scatter](xgb_oof_scatter_uncalibrated.png)
 
 - **Figure 8:** Calibrated Scatter  
-  `xgb_results/xgb_oof_scatter_calibrated.png`  
+ 
   ![Calibrated scatter](xgb_oof_scatter_calibrated.png)
 
 - **Figure 9:** Calibration Curves (uncalibrated vs calibrated)  
-  `xgb_results/xgb_calibration_curves.png`  
+
   ![Calibration curves](xgb_calibration_curves.png)
 
 
