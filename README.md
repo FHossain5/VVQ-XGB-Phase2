@@ -190,3 +190,34 @@ Key points reported:
 - OOF scatter indicates absence of systemic bias, with predictions clustering around the y=x diagonal.
 - QP and QP² show an inverse, nonlinear relationship with pMOS.
 - Compression type contributes modestly but consistently, refining calibration per encoder type. 
+
+
+### Model training and analysis scripts
+
+- **train_quality_model.py**  
+  Trains a first-stage regression model on human MOS sessions (e.g. VVC compressed videos) using objective metrics and content metadata. Supports cross-validation, grouped splits by video, and saves a fitted model pipeline for later use.
+
+- **evaluate_model_oof.py**  
+  Re-runs cross-validated evaluation on the MOS dataset and produces out-of-fold (OOF) predictions. Reports RMSE, MAE, R², Pearson and Spearman correlations, with an option to aggregate multiple ratings per video.
+
+- **predict_pmos_from_excel.py**  
+  Uses a trained MOS model to predict pMOS for a larger catalogue (e.g. 8,448 multiview sequences) stored in Excel/CSV. Writes back the predicted pMOS and corresponding DMOS-style scores into a new file.
+
+- **xgb_from_excel.py**  
+  Trains the final XGBoost model directly on the 8,448-sample pMOS catalogue. Uses GroupKFold for robust validation, performs a small hyperparameter search, saves OOF predictions and the tuned model.
+
+- **xgb_pmos_calibration_and_ci.py**  
+  Takes OOF predictions from the XGBoost pMOS model, fits a simple linear calibration (y_cal = a·ŷ + b), and estimates 95% confidence intervals for R², PLCC and SRCC via bootstrap resampling.
+
+- **xgb_shap_analysis.py**  
+  Computes SHAP values for the trained XGBoost model and generates interpretability plots (e.g. feature importance and global effect visualisations) to show which features drive the pMOS predictions.
+
+- **linear_baseline_vv_weightedscore.py**  
+  Implements a linear regression baseline that combines VMAF, PSNR and SSIM into a VV-WeightedScore. Used as a simple, interpretable benchmark against the more flexible XGBoost model.
+
+- **svr_baseline.py**  
+  Trains a support vector regression (SVR) model on the same feature set to provide another baseline, comparable to the regression strategy used in metrics such as VMAF.
+
+- **proxy_on_pmos_baselines.py**  
+  Runs linear / Elastic Net / SVR baselines directly on the 8,448-sample pMOS catalogue to check proxy consistency and compare their performance against the XGBoost pMOS model.
+
